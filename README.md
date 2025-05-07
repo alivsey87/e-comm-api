@@ -115,6 +115,8 @@ Only Order has a `ForeignKey` referencing the User since there is a one-to-many 
 
 ## 4. Schemas
 
+Marshmallow schemas defined here and schema instances created for serialization and deserialization of User, Order and Product objects and also validation of data
+
 ```py
 class UserSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
@@ -145,12 +147,14 @@ product_schema = ProductSchema()
 products_schema = ProductSchema(many=True)
 ```
 
+The `OrderSchema` has the `user_id` defined as required to provide custom validation requiring the user_id in the order endpoint for order creation. The `order_date` is defined as not required since I used `server_default=func.now()` (timestamp from database itself) in the Order model to determine the date when the order is created.
+
 ---
 ---
 
 ## 5. Routes/Endpoints
 
-All of the routes and endpoints for the Users, Orders and Products using CRUD operations and the HTTP methods used to perform these operations
+All of the routes and endpoints for the Users, Orders and Products using CRUD operations and the HTTP methods used to perform these operations. Schemas are used where appropriate to translate data to and from JSON and to validate data as well:
 
 ### Users
 
